@@ -96,7 +96,7 @@ function grantRegisteredPermissions (roles, models, admin, config) {
 
   // XXX copy/paste from above. terrible. improve.
   var permittedModels = _.filter(models, function (model) {
-    return !_.contains(modelRestrictions.registered, model.name);
+    return !_.contains(_.get(config, 'modelRestrictions.registered') || modelRestrictions.registered, model.name);
   });
   var grantPermissions = _.flatten(_.map(permittedModels, function (modelEntity) {
 
