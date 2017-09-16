@@ -119,6 +119,16 @@ module.exports = {
     if (!_.isArray(objects)) {
       objects = [objects];
     }
+    
+    // if user is not the owner of any of the objects
+    // then filter out 'owner' relation permissions
+    if (!objects.some(function (obj) {
+        return obj.owner == user;
+    })) {
+        permissions = permissions.filter(function (permission) {
+            return permission.relation === 'role';
+        });
+    }
 
     var criteria = permissions.reduce(function (memo, perm) {
       if (perm) {
